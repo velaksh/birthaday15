@@ -239,7 +239,7 @@
             </div>
 
                  <!-- Step 4.5: Memory Lane -->
-             <div class="step" id="step4">
+             <div class="step" id="step4_5">
             
                 <div class="bg-gradient-to-r from-pink-200 to-rose-200 rounded-xl p-8 mb-8 flex flex-col justify-center items-center">
                    
@@ -433,6 +433,14 @@
             showStep(currentStep);
         });
 
+
+// Add another button in step4_5 for final step
+document.getElementById('next-btn-4_5').addEventListener('click', () => {
+    currentStep = 5;
+    showStep(currentStep);
+});
+
+        
         // Confetti button
         document.getElementById('confetti-btn').addEventListener('click', () => {
             // Standard confetti
