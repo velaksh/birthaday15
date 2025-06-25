@@ -249,7 +249,7 @@
                     -I'll Keep On Shining As long As you Are Mine💗.)</p>
                 </div>
                 
-                <button class="btn" id="next-btn-4">One Last Thing</button>
+                <button class="btn" id="next-btn-4_5">One Last Thing</button>
             </div>
             <!-- Step 5: Final Wish -->
             <div class="step" id="step5">
@@ -268,240 +268,230 @@
         </div>
     </div>
 
-    <script>
-        // Three.js Heart Background
-        const container = document.getElementById('canvas-container');
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        container.appendChild(renderer.domElement);
+   <script>
+    // ========== Three.js Heart Background ==========
+    const container = document.getElementById('canvas-container');
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    container.appendChild(renderer.domElement);
 
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 30;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 30;
 
-        // Improved Heart Geometry
-        const x = 0, y = 0;
-        const heartShape = new THREE.Shape();
-        heartShape.moveTo(x + 0.5, y + 0.5);
-        heartShape.bezierCurveTo(x + 0.5, y + 0.5, x + 1, y, x, y);
-        heartShape.bezierCurveTo(x - 1, y, x - 1, y + 1.5, x - 1, y + 1.5);
-        heartShape.bezierCurveTo(x - 1, y + 2.5, x + 0.5, y + 3.5, x + 0.5, y + 3.5);
-        heartShape.bezierCurveTo(x + 0.5, y + 3.5, x + 2, y + 2.5, x + 2, y + 1.5);
-        heartShape.bezierCurveTo(x + 2, y + 1.5, x + 2, y, x + 1, y);
-        heartShape.bezierCurveTo(x + 0.5, y, x + 0.5, y + 0.5, x + 0.5, y + 0.5);
+    const heartShape = new THREE.Shape();
+    const x = 0, y = 0;
+    heartShape.moveTo(x + 0.5, y + 0.5);
+    heartShape.bezierCurveTo(x + 0.5, y + 0.5, x + 1, y, x, y);
+    heartShape.bezierCurveTo(x - 1, y, x - 1, y + 1.5, x - 1, y + 1.5);
+    heartShape.bezierCurveTo(x - 1, y + 2.5, x + 0.5, y + 3.5, x + 0.5, y + 3.5);
+    heartShape.bezierCurveTo(x + 0.5, y + 3.5, x + 2, y + 2.5, x + 2, y + 1.5);
+    heartShape.bezierCurveTo(x + 2, y + 1.5, x + 2, y, x + 1, y);
+    heartShape.bezierCurveTo(x + 0.5, y, x + 0.5, y + 0.5, x + 0.5, y + 0.5);
 
-        const extrudeSettings = {
-            depth: 0.5,
-            bevelEnabled: true,
-            bevelSegments: 3,
-            bevelSize: 0.2,
-            bevelThickness: 0.3
-        };
+    const extrudeSettings = {
+        depth: 0.5,
+        bevelEnabled: true,
+        bevelSegments: 3,
+        bevelSize: 0.2,
+        bevelThickness: 0.3
+    };
 
-        const heartGeometry = new THREE.ExtrudeGeometry(heartShape, extrudeSettings);
+    const heartGeometry = new THREE.ExtrudeGeometry(heartShape, extrudeSettings);
 
-        // Create multiple hearts with different colors and properties
-        const hearts = [];
-        const colors = [
-            0xff6b6b, 0xff8e8e, 0xffb3b3, 0xffd8d8,
-            0xff9e9e, 0xffc1c1, 0xff6b8e, 0xff8eb3
-        ];
+    const hearts = [];
+    const colors = [0xff6b6b, 0xff8e8e, 0xffb3b3, 0xffd8d8, 0xff9e9e, 0xffc1c1, 0xff6b8e, 0xff8eb3];
 
-        for (let i = 0; i < 25; i++) {
-            const material = new THREE.MeshPhongMaterial({
-                color: colors[Math.floor(Math.random() * colors.length)],
-                emissive: 0xff0000,
-                emissiveIntensity: 0.1,
-                shininess: 100,
-                transparent: true,
-                opacity: 0.9
-            });
-
-            const heart = new THREE.Mesh(heartGeometry, material);
-
-            // Random position and scale
-            heart.position.x = (Math.random() - 0.5) * 50;
-            heart.position.y = (Math.random() - 0.5) * 50;
-            heart.position.z = (Math.random() - 0.5) * 50;
-
-            const scale = Math.random() * 0.8 + 0.5;
-            heart.scale.set(scale, scale, scale);
-
-            // Random rotation
-            heart.rotation.x = Math.random() * Math.PI;
-            heart.rotation.y = Math.random() * Math.PI;
-
-            // Store animation properties
-            heart.userData = {
-                speedX: Math.random() * 0.02 - 0.01,
-                speedY: Math.random() * 0.02 - 0.01,
-                speedZ: Math.random() * 0.02 - 0.01,
-                rotationSpeedX: Math.random() * 0.01,
-                rotationSpeedY: Math.random() * 0.01,
-                originalX: heart.position.x,
-                originalY: heart.position.y,
-                originalZ: heart.position.z,
-                floatDistance: 2 + Math.random() * 3
-            };
-
-            scene.add(heart);
-            hearts.push(heart);
-        }
-
-        // Add lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        scene.add(ambientLight);
-
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(1, 1, 1);
-        scene.add(directionalLight);
-
-        // Animation loop
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // Animate hearts
-            hearts.forEach(heart => {
-                // Floating animation
-                const time = Date.now() * 0.001;
-                heart.position.x = heart.userData.originalX + Math.sin(time * heart.userData.speedX * 10) * heart.userData.floatDistance;
-                heart.position.y = heart.userData.originalY + Math.sin(time * heart.userData.speedY * 10) * heart.userData.floatDistance;
-                heart.position.z = heart.userData.originalZ + Math.sin(time * heart.userData.speedZ * 10) * heart.userData.floatDistance;
-
-                // Rotation
-                heart.rotation.x += heart.userData.rotationSpeedX;
-                heart.rotation.y += heart.userData.rotationSpeedY;
-            });
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+    for (let i = 0; i < 25; i++) {
+        const material = new THREE.MeshPhongMaterial({
+            color: colors[Math.floor(Math.random() * colors.length)],
+            emissive: 0xff0000,
+            emissiveIntensity: 0.1,
+            shininess: 100,
+            transparent: true,
+            opacity: 0.9
         });
 
-        // Step Navigation
-        let currentStep = 1;
-        const totalSteps = 5;
+        const heart = new THREE.Mesh(heartGeometry, material);
+        heart.position.set((Math.random() - 0.5) * 50, (Math.random() - 0.5) * 50, (Math.random() - 0.5) * 50);
 
-        function updateProgressBar() {
+        const scale = Math.random() * 0.8 + 0.5;
+        heart.scale.set(scale, scale, scale);
+        heart.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+
+        heart.userData = {
+            speedX: Math.random() * 0.02 - 0.01,
+            speedY: Math.random() * 0.02 - 0.01,
+            speedZ: Math.random() * 0.02 - 0.01,
+            rotationSpeedX: Math.random() * 0.01,
+            rotationSpeedY: Math.random() * 0.01,
+            originalX: heart.position.x,
+            originalY: heart.position.y,
+            originalZ: heart.position.z,
+            floatDistance: 2 + Math.random() * 3
+        };
+
+        scene.add(heart);
+        hearts.push(heart);
+    }
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight.position.set(1, 1, 1);
+    scene.add(directionalLight);
+
+    function animate() {
+        requestAnimationFrame(animate);
+        const time = Date.now() * 0.001;
+
+        hearts.forEach(heart => {
+            heart.position.x = heart.userData.originalX + Math.sin(time * heart.userData.speedX * 10) * heart.userData.floatDistance;
+            heart.position.y = heart.userData.originalY + Math.sin(time * heart.userData.speedY * 10) * heart.userData.floatDistance;
+            heart.position.z = heart.userData.originalZ + Math.sin(time * heart.userData.speedZ * 10) * heart.userData.floatDistance;
+
+            heart.rotation.x += heart.userData.rotationSpeedX;
+            heart.rotation.y += heart.userData.rotationSpeedY;
+        });
+
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // ========== Step Navigation ==========
+    let currentStep = 1;
+    const totalSteps = 5;
+
+    function updateProgressBar() {
+        if (typeof currentStep === 'number') {
             const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
             document.getElementById('progress-bar').style.width = `${progress}%`;
         }
+    }
 
-        function showStep(stepNumber) {
-            // Hide all steps
-            document.querySelectorAll('.step').forEach(step => {
-                step.classList.remove('active');
-            });
+    function showStep(step) {
+        document.querySelectorAll('.step').forEach(stepEl => stepEl.classList.remove('active'));
 
-            // Show current step
-            document.getElementById(`step${stepNumber}`).classList.add('active');
+        const stepId = typeof step === 'number' ? `step${step}` : step;
+        const stepElement = document.getElementById(stepId);
+        if (stepElement) stepElement.classList.add('active');
 
-            // Update progress bar
+        if (typeof step === 'number') {
+            currentStep = step;
             updateProgressBar();
-
-            // Special effect for last step
-            if (stepNumber === totalSteps) {
-                document.getElementById('confetti-btn').classList.add('animate-pulse');
-            }
         }
 
-        // Button event listeners
-        document.getElementById('start-btn').addEventListener('click', () => {
-            currentStep = 2;
-            showStep(currentStep);
+        if (step === 5 || step === 'step5') {
+            document.getElementById('confetti-btn').classList.add('animate-pulse');
+        }
+    }
+
+    // ========== Navigation Buttons ==========
+    document.getElementById('start-btn')?.addEventListener('click', () => {
+        showStep(2);
+    });
+
+    document.getElementById('next-btn-2')?.addEventListener('click', () => {
+        showStep(3);
+    });
+
+    document.getElementById('next-btn-3')?.addEventListener('click', () => {
+        showStep(4);
+    });
+
+    document.getElementById('next-btn-4')?.addEventListener('click', () => {
+        showStep('step4_5');
+    });
+
+    document.getElementById('next-btn-4_5')?.addEventListener('click', () => {
+        showStep(5);
+    });
+
+    document.getElementById('back-btn-2')?.addEventListener('click', () => {
+        showStep(1);
+    });
+
+    document.getElementById('back-btn-3')?.addEventListener('click', () => {
+        showStep(2);
+    });
+
+    document.getElementById('back-btn-4')?.addEventListener('click', () => {
+        showStep(3);
+    });
+
+    document.getElementById('back-btn-4_5')?.addEventListener('click', () => {
+        showStep(4);
+    });
+
+    document.getElementById('back-btn-5')?.addEventListener('click', () => {
+        showStep('step4_5');
+    });
+
+    // ========== Confetti Animation ==========
+    document.getElementById('confetti-btn')?.addEventListener('click', () => {
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#ff0000', '#ff69b4', '#ff1493', '#ffc0cb']
         });
 
-        document.getElementById('next-btn-2').addEventListener('click', () => {
-            currentStep = 3;
-            showStep(currentStep);
-        });
-
-        document.getElementById('next-btn-3').addEventListener('click', () => {
-            currentStep = 4;
-            showStep(currentStep);
-        });
-
-        document.getElementById('next-btn-4').addEventListener('click', () => {
-            currentStep = 5;
-            showStep(currentStep);
-        });
-
-
-// Add another button in step4_5 for final step
-document.getElementById('next-btn-4_5').addEventListener('click', () => {
-    currentStep = 5;
-    showStep(currentStep);
-});
-
-        
-        // Confetti button
-        document.getElementById('confetti-btn').addEventListener('click', () => {
-            // Standard confetti
+        setTimeout(() => {
             confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#ff0000', '#ff69b4', '#ff1493', '#ffc0cb']
+                particleCount: 30,
+                spread: 60,
+                origin: { y: 0.5 },
+                shapes: ['heart'],
+                colors: ['#ff0000', '#ff69b4']
+            });
+        }, 300);
+
+        setTimeout(() => {
+            confetti({
+                particleCount: 20,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                shapes: ['heart'],
+                colors: ['#ff0000', '#ff69b4']
             });
 
-            // Heart-shaped confetti
-            setTimeout(() => {
-                confetti({
-                    particleCount: 30,
-                    spread: 60,
-                    origin: { y: 0.5 },
-                    shapes: ['heart'],
-                    colors: ['#ff0000', '#ff69b4']
-                });
-            }, 300);
+            confetti({
+                particleCount: 20,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                shapes: ['heart'],
+                colors: ['#ff0000', '#ff69b4']
+            });
+        }, 600);
 
-            // More hearts from different directions
-            setTimeout(() => {
-                confetti({
-                    particleCount: 20,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 },
-                    shapes: ['heart'],
-                    colors: ['#ff0000', '#ff69b4']
-                });
+        hearts.forEach(heart => {
+            gsap.to(heart.position, {
+                y: heart.position.y - 30,
+                duration: 3,
+                ease: "power1.out"
+            });
 
-                confetti({
-                    particleCount: 20,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 },
-                    shapes: ['heart'],
-                    colors: ['#ff0000', '#ff69b4']
-                });
-            }, 600);
-
-            // Make hearts float up from the background
-            hearts.forEach(heart => {
-                gsap.to(heart.position, {
-                    y: heart.position.y - 30,
-                    duration: 3,
-                    ease: "power1.out"
-                });
-
-                gsap.to(heart.material, {
-                    opacity: 0,
-                    duration: 3,
-                    ease: "power1.out"
-                });
+            gsap.to(heart.material, {
+                opacity: 0,
+                duration: 3,
+                ease: "power1.out"
             });
         });
+    });
 
-        // Initialize progress bar
-        updateProgressBar();
-    </script>
+    // ========== Start App ==========
+    showStep(currentStep);
+    updateProgressBar();
+</script>
+
 </body>
 
 </html>
